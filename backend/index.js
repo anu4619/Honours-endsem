@@ -1,74 +1,38 @@
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const { User } = require("../models/UserModel");
-const { Post } = require("../models/PostModel");
-const addUser = async (req, res) => {
-  try {
-    const { username, name, password } = req.body;
+const express = require("express");
+const mongoose = require("mongoose");
+const app = express();
+const cors = require("cors");
 
-    // Check if username already exists
-    const existingUser = await User.findOne({ username });
-    if (existingUser) {
-      return res.status(400).json({ error: "Username already exists" });
-    }
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
+app.use(cors());
+require("dotenv").config();
 
-    // Create a new user
-    const newUser = new User({
-      username,
-      name,
-      password: hashedPassword,
-    });
+const AdminRoutes = require("./routes/AdminRoutes");
+const UserRoutes = require("./routes/UserRoutes");
+const PostRoutes = require("./routes/PostRoutes");
 
-    await newUser.save();
+// MongoDB Atlas connection URI
+const uri = process.env.MONGODB_URI;
 
-    // Create and return jwt token
-    const token = jwt.sign({ username }, "your_secret_key");
-    res.status(201).json({ message: "User registered successfully", token });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
-const addRecipe = async (req, res) => {
-  // Req post
-  try {
-    // Get the user ID from the authentication middleware
-    const username = req.username;
-    const existingUser = await User.findOne({ username });
-    console.log(existingUser);
+// Connect to MongoDB Atlas using Mongoose
+mongoose.connect(uri);
 
-    // Extract post data from request body
-    const { title, content } = req.body;
+// Get the default connection
+const db = mongoose.connection;
 
-    // Create a new post document
-    const newPost = new Post({
-      uploader: existingUser._id,
-      title,
-      content,
-    });
+// Bind connection to error event (to get notification of connection errors)
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
+db.once("open", () => {
+  console.log("Connected to MongoDB Atlas");
+});
 
-    // Save the new post to the database
-    await newPost.save();
+app.use(AdminRoutes);
+app.use(UserRoutes);
+app.use(PostRoutes);
 
-    // Update the user's uploadedPosts array with the new post's ID
-    await User.findOneAndUpdate(
-      { username },
-      {
-        $push: { uploadedPosts: newPost._id },
-      }
-    );
+app.listen(8080, () => {
+  console.log("Listening on port 8080");
+});
 
-    // Send a success response
-    return res
-      .status(201)
-      .json({ message: "Post added successfully.", post: newPost });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: "Internal server error." });
-  }
-};
-
-module.exports = { addRecipe, addUser };
