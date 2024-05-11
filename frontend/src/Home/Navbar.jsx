@@ -18,7 +18,7 @@ const Navbar = () => {
         <tbody>
           <tr>
             <th>
-              <Link to={"/home"}>
+              <Link to={"/"}>
                 <img src={logo1} alt="Home" />
               </Link>
             </th>

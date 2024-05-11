@@ -1,14 +1,15 @@
-/* body{
-    height: 100vh;
-    width: 100%;
-   background-color: black;
-      
-} */
+body {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  height: 100vh;
+  background-color: black;
+}
 
 .loginbox {
   width: 500px;
   height: 430px;
-  background: #7d8084;
+  background: #27b86f;
   color: rgb(25, 24, 24);
   margin: 70px auto;
   border-radius: 10px;
@@ -18,15 +19,17 @@
 .loginbox1 {
   width: 500px;
   height: 550px;
-  background: #7d8084;
+  background: #27b86f;
   color: rgb(25, 24, 24);
   margin: 70px auto;
   border-radius: 10px;
   font-size: 20px;
 }
 h1 {
+
   text-align: center;
-  margin-top: 160px;
+color: white;
+  margin-top: 140px;
 }
 
 label {
@@ -34,6 +37,13 @@ label {
   display: block;
   margin-left: 20px;
 }
+
+input.enteruser {
+  box-sizing: border-box;
+  width: 250px; 
+  height: 30px; 
+}
+
 
 input {
   width: 90%;
@@ -58,7 +68,7 @@ input[type="password"] {
   outline: none;
   height: 40px;
   border-radius: 20px;
-  background: #0b0b0b;
+  background: #000000;
   color: white;
   font-size: 20px;
   cursor: pointer;
@@ -72,4 +82,5 @@ input[type="password"] {
 
 input[type="submit"]:hover {
   background: rgb(97, 96, 98);
+  
 }

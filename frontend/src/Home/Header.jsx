@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <header>
       <nav>
-        <div className="logo">MyBlog.</div>
+      <div className="logo">Recipefy.</div>
       </nav>
     </header>
   );

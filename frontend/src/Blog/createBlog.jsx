@@ -66,7 +66,7 @@ const CreateBlog = () => {
   return (
     <div>
       <div id="dashboard">
-        <h1>My Blog</h1>
+        <h1>Recipefy.</h1>
       </div>
 
       <form onSubmit={handleSubmit}>
@@ -74,12 +74,12 @@ const CreateBlog = () => {
           type="text"
           value={title}
           onChange={handleTitleChange}
-          placeholder="Title"
+          placeholder="Recipe Name"
         />
         <textarea
           value={content}
           onChange={handleContentChange}
-          placeholder="Share your story"
+          placeholder="Share your recipe"
         ></textarea>
         <button type="submit" id="draftBtn">
           Save as Draft

@@ -7,6 +7,7 @@ import Navbar from "./Navbar.jsx";
 function Allpost() {
   return (
     <main>
+      
       <Header />
       <Blog />
 

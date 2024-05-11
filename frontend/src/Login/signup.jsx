@@ -47,7 +47,7 @@ const Signup = () => {
         <label>Name</label>
         <input type="text" name="name" placeholder="Enter Name" required />
         <label>Username</label>
-        <input
+        <input className="enteruser"
           type="text"
           name="username"
           placeholder="Enter Username"
